@@ -1,0 +1,90 @@
+# Lines starting with a # are comment lines and are ignored by MDE.
+#[language = "English" version = 1]
+
+#Menu
+File: &File
+	newFile: &New File
+	newFileWin: &New File In New Window
+	openFile: &Open File...
+    openFileWin: &Open File In New Window
+	save: &Save
+	saveAs: Save A&s
+	export:	&Export To HTML
+	recentFiles: Re&cent Files
+	exit: E&xit
+
+Edit: &Edit
+	undo: &Undo
+	redo: &Redo
+	cut: C&ut
+	copy: &Copy
+	paste: &Paste
+	selectAll: Select All
+
+Window: &Window
+#	_showMenu: Show &Menu
+	_topMost: &Top Most
+	_full: &Full Screen
+	nWin: &New Window
+	closeWin: &Close Window
+
+Settings: &Settings
+	font: Font
+		fp: Larger
+		fm: Smaller
+		fr: Reset
+    _wordWrap: Word wrap
+	settings: Open Settings
+
+Help: &Help
+	docs: Documentation
+	about: About
+
+# dialog windows
+# Settings
+settings-win-title: Settings
+OK: &OK
+Cancel: &Cancel
+
+NewFile: &New File
+    folder: Folder
+    name: Name
+View: &View
+    theme: Theme
+    cTheme: Customize
+    rTheme: Remove
+	nTheme: New
+Language: &Language
+# lang: Language
+    downloadLang: Download
+
+# Theme
+changeTheme: Change theme
+newTheme: Create new theme
+saveTheme: Save
+color: Color
+bg: Background
+bgOver: Mouse over
+bgDown: Mouse down
+textColor: Text
+caret: Caret
+
+menu: Tool bar
+text: Text
+
+# Messages
+error: Error
+msgDirIsNotFound: This folder is not found.
+msgCharsInName: Name cannot contain /, \, :, *, <, >, |
+msgThemeIsNotFound: The theme is not found. The default theme will be installed.
+msgThemeAlreadyExists: The theme already exists.
+msgRemoveTheme: The theme will be removed.
+
+msgErrorOpenFile: Unable to open file.
+msgErrorSaveFile: Unable to save file.
+
+msgUnsavedChanges: There are unsaved changes in the current file
+
+msgSaveBeforeExiting: Do you want to save changes to the current file before exiting? 
+msgSaveBeforeOpening: Do you want to save changes to the current file before opening another? 
+msgSaveBeforeCreating: Do you want to save changes to the current file before creating a new one?

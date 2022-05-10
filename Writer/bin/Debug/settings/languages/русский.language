@@ -1,0 +1,90 @@
+# Lines starting with a # are comment lines and are ignored by MDE.
+#[language = "Русский" version = 1]
+
+#Menu
+File: &Файл
+	newFile: &Новый файл
+	newFileWin: &Новый файл в новом окне
+	openFile: &Открыть файл
+    openFileWin: &Открыть файл в новом окне
+	save: &Сохранить
+	saveAs: Сохранить к&ак
+	export: &Экспортировать в HTML
+	recentFiles: Последние файлы
+	exit: Выход
+
+Edit: &Правка
+	undo: &Отменить
+	redo: &Вернуть
+	cut: &Вырезать
+	copy: &Копировать
+	paste: Вст&авить
+	selectAll: Выделить все
+
+Window: &Окно
+#	_showMenu: Показать &меню
+	_topMost: &Поверх остальных окон
+	_full: На &весь экран
+	nWin: &Новое окно
+	closeWin: &Закрыть окно
+
+Settings: &Настройки
+	font: Шрифт
+		fp: Увеличить
+		fm: Уменьшить
+		fr: Вернуть
+	_wordWrap: Переносить по словам
+	settings: Открыть настройки
+
+Help: &Помощь
+	docs: Документация
+	about: О приложении
+
+# dialog windows
+# Settings
+settings-win-title: Настройки
+OK: Применить
+Cancel: Отмена
+
+NewFile: Файл
+    folder: Путь
+    name: Имя
+View: Внешний вид
+    theme: Тема
+    cTheme: Настроить
+    rTheme: Удалить
+    nTheme: Создать
+Language: Язык
+# lang: Language
+    downloadLang: Скачать
+
+# Theme
+changeTheme: Изменить тему
+newTheme: Создать новую тему
+saveTheme: Сохранить
+color: Цвет
+bg: Фон
+bgOver: При наведении
+bgDown: При нажатии
+textColor: Текст
+caret: Курсор
+
+menu: Меню
+text: Текст
+
+# Messages
+error: Ошибка
+msgDirIsNotFound: Укажите существующую папку
+msgCharsInName: Имя не может содержать /, \, :, *, <, >, |
+msgThemeIsNotFound: Тема не найдена. Будет установлена тема по умолчанию.
+msgThemeAlreadyExists: Тема с таким именем уже существует.
+msgRemoveTheme: Удалить тему?
+
+msgErrorOpenFile: Не удалось открыть файл.
+msgErrorSaveFile: Не удалось сохранить файл.
+
+msgUnsavedChanges: Есть несохранённые изменения
+
+msgSaveBeforeExiting: Сохранить изменения в текущем файле перед выходом?
+msgSaveBeforeOpening: Сохранить изменения в текущем файле перед открытием другого?
+msgSaveBeforeCreating: Сохранить изменения в текущем файле перед созданием нового?
