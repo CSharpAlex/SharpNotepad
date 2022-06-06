@@ -199,14 +199,14 @@ namespace Writer.ControlsNS {
             #endregion
 
             /**/
-            string[] files = Directory.GetFiles("./settings/languages", "*.language");
-            int start = "./settings/languages/".Length;
+            string[] files = Directory.GetFiles(Settings.SETTINGS_DIR + "/languages", "*.language");
+            int start = (Settings.SETTINGS_DIR + "/languages/").Length;
             foreach (string lang in files)
                 cmbLang.Items.Add(lang.Substring(start, lang.Length - start - ".language".Length));
             cmbLang.SelectedItem = Settings.LanguageName;
 
-            files = Directory.GetFiles("./themes", "*.theme");
-            start = "./themes/".Length;
+            files = Directory.GetFiles(Settings.THEME_DIR, "*.theme");
+            start = (Settings.THEME_DIR + "/").Length;
             foreach (string theme in files)
                 cmbTheme.Items.Add(theme.Substring(start, theme.Length - start - ".theme".Length));
             cmbTheme.SelectedItem = Settings.Theme.Name;

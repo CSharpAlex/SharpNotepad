@@ -171,11 +171,11 @@ namespace Writer.ControlsNS {
                     Controls["mtextColor"].BackColor,
                     Controls["mbgOver"].BackColor,
                     Controls["mbgDown"].BackColor);
-                if (themeName == null && File.Exists($"./themes/{theme1.Name}.theme")) {
+                if (themeName == null && File.Exists(Settings.THEME_DIR + $"/{theme1.Name}.theme")) {
                     MessageBox.Show(Language.Get("msgThemeAlreadyExists"), "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                else if (themeName != null && theme1.Name != themeName) File.Delete($"./themes/{themeName}.theme");
+                else if (themeName != null && theme1.Name != themeName) File.Delete(Settings.THEME_DIR + $"/{themeName}.theme");
                 Theme.SaveTheme(theme1);
             };
         }

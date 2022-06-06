@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Writer.SettingsNS;
 
 namespace Writer.LanguageNS {
     static public class Language {
@@ -15,78 +16,8 @@ namespace Writer.LanguageNS {
         //static (string key, string val)[] words;
         public static void Load(string langName) {
             //default values
-            /*words = new (string key, string val)[] {
-            ("File", null),
-            ("newFile", null),
-            ("newFileWin", null),
-            ("openFile", null),
-            ("openFileWin", null),
-            ("save", null),
-            ("saveAs", null),
-            ("export", null),
-            ("recentFiles", null),
-            ("exit", null),
-            ("Edit", null),
-            ("undo", null),
-            ("redo", null),
-            ("cut", null),
-            ("copy", null),
-            ("paste", null),
-            ("selectAll", null),
-            ("Window", null),
-            ("_topMost", null),
-            ("_full", null),
-            ("nWin", null),
-            ("closeWin", null),
-            ("Settings", null),
-            ("font", null),
-            ("fp", null),
-            ("fm", null),
-            ("fr", null),
-            ("_wordWrap", null),
-            ("settings", null),
-            ("Help", null),
-            ("docs", null),
-            ("about", null),
-            ("settings-win-title", null),
-            ("OK", null),
-            ("Cancel", null),
-            ("NewFile", null),
-            ("folder", null),
-            ("name", null),
-            ("View", null),
-            ("theme", null),
-            ("cTheme", null),
-            ("rTheme", null),
-            ("nTheme", null),
-            ("Language", null),
-            ("downloadLang", null),
-            ("changeTheme", null),
-            ("newTheme", null),
-            ("saveTheme", null),
-            ("color", null),
-            ("bg", null),
-            ("bgOver", null),
-            ("bgDown", null),
-            ("textColor", null),
-            ("caret", null),
-            ("menu", null),
-            ("text", null),
-            ("error", null),
-            ("msgDirIsNotFound", null),
-            ("msgCharsInName", null),
-            ("msgThemeIsNotFound", null),
-            ("msgRemoveTheme", null),
-            ("msgThemeAlreadyExists", null),
-            ("msgErrorOpenFile", null),
-            ("msgErrorSaveFile", null),
-            ("msgUnsavedChanges", null),
-            ("msgSaveBeforeExiting", null),
-            ("msgSaveBeforeOpening", null),
-            ("msgSaveBeforeCreating", null)
-        };*/
-
             words = new Word[] {
+                new Word("_menu_visible"),
                 new Word("File"),
                 new Word("newFile"),
                 new Word("newFileWin"),
@@ -104,6 +35,8 @@ namespace Writer.LanguageNS {
                 new Word("copy"),
                 new Word("paste"),
                 new Word("selectAll"),
+                new Word("find"),
+                new Word("replace"),
                 new Word("Window"),
                 new Word("_topMost"),
                 new Word("_full"),
@@ -160,8 +93,8 @@ namespace Writer.LanguageNS {
             string line, key, val;
 
             try {
-                if (!Directory.Exists("./settings/languages/")) Directory.CreateDirectory("./settings/languages/");
-                using (StreamReader r = new StreamReader($"./settings/languages/{langName}.language")) {
+                if (!Directory.Exists(Settings.SETTINGS_DIR + "/languages/")) Directory.CreateDirectory(Settings.SETTINGS_DIR + "/languages/");
+                using (StreamReader r = new StreamReader(Settings.SETTINGS_DIR + $"/languages/{langName}.language")) {
                     while ((line = r.ReadLine()) != null) {
                         if (line.Length > 1 && line[0] != '#' && !string.IsNullOrWhiteSpace(line)) {
                             int ind = line.IndexOf(':');

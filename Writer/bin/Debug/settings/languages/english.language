@@ -20,9 +20,11 @@ Edit: &Edit
 	copy: &Copy
 	paste: &Paste
 	selectAll: Select All
+	find: &Find
+	replace: &Replace
 
 Window: &Window
-#	_showMenu: Show &Menu
+	_menu_visible: Show &Menu
 	_topMost: &Top Most
 	_full: &Full Screen
 	nWin: &New Window

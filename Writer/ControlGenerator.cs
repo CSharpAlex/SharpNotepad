@@ -25,7 +25,7 @@ namespace Writer.ControlsNS {
             return btn;
         }
         internal delegate void ClickDelegate(string name, bool ischecked = false);
-        internal static MainMenu MainMenuGen(ClickDelegate clickDelegate, bool wordWrap) {
+        internal static MainMenu MainMenuGen(ClickDelegate clickDelegate, bool wordWrap, bool menu_visible) {
             void MItem_Click(object sender, EventArgs e) {
                 var mItem = (MenuItem)sender;
                 string name = mItem.Name;
@@ -38,7 +38,7 @@ namespace Writer.ControlsNS {
             }
             //MenuItem[] GetRecentFiles() {
             //    string[] rfiles = new string[0];
-            //    try { rfiles = System.IO.File.ReadAllLines("./settings/recent_files.dat"); }
+            //    try { rfiles = System.IO.File.ReadAllLines(SETTINGS_DIR + "/recent_files.dat"); }
             //    catch (Exception) { }
 
             //    MenuItem[] mItems = new MenuItem[rfiles.Length];
@@ -60,6 +60,9 @@ namespace Writer.ControlsNS {
 
                 if (name == "_wordWrap")
                     mItem.Checked = wordWrap;
+                    
+                if (name == "_menu_visible")
+                    mItem.Checked = menu_visible;
 
                 mItem.Click += MItem_Click;
 
@@ -93,14 +96,15 @@ namespace Writer.ControlsNS {
                 GenerateItem("paste", Shortcut.CtrlV),
                 new MenuItem("-"),
                 GenerateItem("selectAll", Shortcut.CtrlA),
-                //new MenuItem("-"),
-                //GenerateItem("find", Shortcut.CtrlF),
-                //GenerateItem("replace", Shortcut.CtrlH),
+                new MenuItem("-"),
+                GenerateItem("find", Shortcut.CtrlF),
+                GenerateItem("replace", Shortcut.CtrlH),
             });
             //Window
             menu.MenuItems.Add(Language.Get("Window"), new MenuItem[] {
                 //GenerateItem("_showMenu", Shortcut.CtrlShiftM),
                 GenerateItem("_topMost", Shortcut.CtrlT),
+                //GenerateItem("_menu_visible", Shortcut.CtrlM),
                 GenerateItem("_full", Shortcut.F11),
                 new MenuItem("-"),
                 GenerateItem("nWin", Shortcut.CtrlShiftN),

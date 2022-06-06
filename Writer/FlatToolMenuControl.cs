@@ -54,12 +54,26 @@ namespace Writer.ControlsNS {
                         }
                         else ((Panel)Controls[i]).BackColor = Settings.Theme.mBgDown;
                 }*/
+
+
+        public Bitmap CreateNonIndexedImage(Image src)
+        {
+            Bitmap newBmp = new Bitmap(src.Width, src.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            using (Graphics gfx = Graphics.FromImage(newBmp))
+            {
+                gfx.DrawImage(src, 0, 0);
+            }
+
+            return newBmp;
+        }
+
         public FlatToolMenuControl(ClickDelegate click) {
             x = 0;
             cl_d = click;
             Height = 30;
             Dock = DockStyle.Top;
-            BackColor = Settings.Theme.mBackColor;
+            BackColor = Settings.Theme.mBackColor;                  
             ForeColor = Settings.Theme.mForeColor;
 
             string[] arr = { "newFile", "save", "openFile", "cut", "copy", "paste" };
@@ -67,7 +81,11 @@ namespace Writer.ControlsNS {
                 if (fmItem == 255)
                     AddSeparator();
                 else if (fmItem < arr.Length) {
-                    Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(arr[fmItem]);
+                    Bitmap bmpOrig = (Bitmap)Properties.Resources.ResourceManager.GetObject(arr[fmItem]);
+
+                    Bitmap bmp = CreateNonIndexedImage(bmpOrig); //bmpOrig.Clone(new Rectangle(0, 0, bmpOrig.Width, bmpOrig.Height), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+
                     for (byte x = 0; x < bmp.Width; x++)
                         for (byte y = 0; y < bmp.Height; y++) {
                             Color c = bmp.GetPixel(x, y);
@@ -96,6 +114,13 @@ namespace Writer.ControlsNS {
                 Font = new Font("Calibri", 13),
             };
             btn.Click += Btn_Click;
+            
+            //для Mono
+            btn.MouseEnter += (s, e) => (s as Control).BackColor=Settings.Theme.mBgOver;
+            btn.MouseLeave += (s, e) => (s as Control).BackColor=Settings.Theme.mBackColor;
+            btn.MouseDown += (s, e) => (s as Control).BackColor = Settings.Theme.mBgDown;
+            btn.MouseUp += (s, e) => (s as Control).BackColor = Settings.Theme.mBackColor;
+            
             Controls.Add(btn);
             x += btn.Width;
         }
@@ -104,7 +129,7 @@ namespace Writer.ControlsNS {
             var separator = new Panel {
                 Size = new Size(1, Height),
                 Location = new Point(x, 0),
-                BackColor = Settings.Theme.mBgDown,
+                BackColor = Settings.Theme.mBgOver,
                 Name = "sep",
             };
             Controls.Add(separator);

@@ -16,15 +16,17 @@ namespace Writer {
 
         string path = "";
         bool changed = false;
+        bool menu_visible = true;
 
         public FrmMain(string path = null) {
+                
             #region Initialize frm
             Settings.Load();
             BackColor = Settings.Theme.txtBackColor;
 
             tb = new RichTextBox {
-                Location = new Point(3, 33),
-                Size = new Size(ClientSize.Width - 3, ClientSize.Height - 33),
+                Location = new Point(7, 33),
+                Size = new Size(ClientSize.Width - 7, ClientSize.Height - 33),
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
                 BorderStyle = BorderStyle.None,
                 BackColor = Settings.Theme.txtBackColor,
@@ -76,7 +78,7 @@ namespace Writer {
 
             #region Load user's setting
             try {
-                using (var r = new BinaryReader(File.OpenRead("./settings/user.settings"))) {
+                using (var r = new BinaryReader(File.OpenRead(Settings.SETTINGS_DIR + "/user.settings"))) {
                     byte version = r.ReadByte();
                     if (version == 1) {
                         WindowState = r.ReadBoolean() ? FormWindowState.Maximized : FormWindowState.Normal;
@@ -88,18 +90,24 @@ namespace Writer {
                         sfDialog.FilterIndex = ofDialog.FilterIndex;
 
                         tb.WordWrap = r.ReadBoolean();
+                        menu_visible = r.ReadBoolean();
                     }
                 }
             }
-            catch {
+            catch (Exception ex) {
                 StartPosition = FormStartPosition.CenterScreen;
                 ClientSize = new Size(700, 400);
             }
             #endregion
             //Menu
-            Menu = ControlGenerator.MainMenuGen(MenuClick, tb.WordWrap);
+            Menu = ControlGenerator.MainMenuGen(MenuClick, tb.WordWrap, true);
 
             if (path != null) Open(path);
+
+            try {
+                Icon = new Icon(Settings.APP_PATH + "/res/icon.ico");
+            }
+            catch { /*без иконки*/ }
 
             GC.Collect();
         }
@@ -111,8 +119,8 @@ namespace Writer {
             if (!CloseFile(Language.Get("msgSaveBeforeExiting"))) e.Cancel = true;
             else {
                 try {
-                    if (!Directory.Exists("./settings")) Directory.CreateDirectory("./settings");
-                    using (var w = new BinaryWriter(File.OpenWrite("./settings/user.settings"))) {
+                    if (!Directory.Exists(Settings.SETTINGS_DIR + "")) Directory.CreateDirectory(Settings.SETTINGS_DIR + "");
+                    using (var w = new BinaryWriter(File.OpenWrite(Settings.SETTINGS_DIR + "/user.settings"))) {
                         w.Write((byte)1); //version
 
                         w.Write(WindowState == FormWindowState.Maximized); //maximized
@@ -126,6 +134,7 @@ namespace Writer {
                         }
                         w.Write((byte)sfDialog.FilterIndex); //filter index
                         w.Write(tb.WordWrap); //_wordWrap
+                        w.Write(menu_visible);
                     }
                 }
                 catch { }
@@ -135,6 +144,10 @@ namespace Writer {
         public void MenuClick(string name, bool ischecked = false) {
             tb.Focus();
             switch (name) {
+                case "_menu_visible":
+                    //TODO: добавить эл. в меню
+                    Menu = ischecked ? ControlGenerator.MainMenuGen(MenuClick, tb.WordWrap, menu_visible) : null;
+                    break;
                 //editing
                 case "undo": tb.Undo(); break;
                 case "redo": tb.Redo(); break;
@@ -144,7 +157,33 @@ namespace Writer {
                 case "selectAll": tb.SelectAll(); break;
 
                 case "find":
-                    
+                    if (Controls.ContainsKey("SearchPanel")) {
+                        Controls["SearchPanel"].Dispose();
+                    }
+
+                    var pnSearch = new CustomControls.SearchPanel(tb);
+
+                    if (tb.SelectionLength > 0)
+                        pnSearch.Controls["tbSearchText"].Text = tb.SelectedText;
+
+                    Theme t = Settings.Theme;
+                    pnSearch.ForeColor = t.mForeColor;
+                    pnSearch.BackColor = t.mBackColor;
+
+                    foreach (Control item in pnSearch.Controls) {
+                        if (item is Button) {
+                            var b = (item as Button);
+                            b.FlatAppearance.MouseOverBackColor = t.mBgOver;
+                            b.FlatAppearance.MouseDownBackColor = t.mBgDown;
+                        }
+                    }
+
+                    pnSearch.Disposed += (s, e) => {
+                        tb.Height = ClientSize.Height - 33;
+                    };
+
+                    tb.Height = ClientSize.Height - 33 - pnSearch.Height;
+                    Controls.Add(pnSearch);
                     break;
 
                 //file
@@ -219,7 +258,7 @@ namespace Writer {
 
                         //language
                         if (settingsDialog.LangIsChanged) {
-                            Menu = ControlGenerator.MainMenuGen(MenuClick, tb.WordWrap);
+                            Menu = ControlGenerator.MainMenuGen(MenuClick, tb.WordWrap, menu_visible);
                             settingsDialog = new SettingsDialog();
                             ofDialog.Title = Language.Get("open").Replace("&", "");
                             sfDialog.Title = Language.Get("save").Replace("&", "");

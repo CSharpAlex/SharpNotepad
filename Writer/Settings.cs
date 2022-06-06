@@ -7,6 +7,9 @@ using Writer.LanguageNS;
 
 namespace Writer.SettingsNS {
     static public partial class Settings {
+    
+        public readonly static string APP_PATH = Application.StartupPath, SETTINGS_DIR = APP_PATH + "/settings";
+        public readonly static string THEME_DIR = APP_PATH + "/themes";
 
         public static Theme Theme;
         public static Font txtFont;
@@ -18,8 +21,8 @@ namespace Writer.SettingsNS {
 
         static public void Save() {
             try {
-                if (!Directory.Exists("./settings")) Directory.CreateDirectory("./settings");
-                using (w = new BinaryWriter(File.OpenWrite("./settings/.settings"))) {
+                if (!Directory.Exists(SETTINGS_DIR + "")) Directory.CreateDirectory(SETTINGS_DIR + "");
+                using (w = new BinaryWriter(File.OpenWrite(SETTINGS_DIR + "/.settings"))) {
                     w.Write((byte)1);
 
                     w.Write(LanguageName);
@@ -45,8 +48,8 @@ namespace Writer.SettingsNS {
         }
         static public void Load() {
             try {
-                if (!Directory.Exists("./settings")) Directory.CreateDirectory("./settings");
-                using (r = new BinaryReader(File.OpenRead("./settings/.settings"))) {
+                if (!Directory.Exists(SETTINGS_DIR + "")) Directory.CreateDirectory(SETTINGS_DIR + "");
+                using (r = new BinaryReader(File.OpenRead(SETTINGS_DIR + "/.settings"))) {
                     byte version = r.ReadByte();
                     if (version == 1) {
 

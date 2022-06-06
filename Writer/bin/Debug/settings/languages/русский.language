@@ -20,9 +20,11 @@ Edit: &Правка
 	copy: &Копировать
 	paste: Вст&авить
 	selectAll: Выделить все
+	find: &Найти
+	replace: &Заменить
 
 Window: &Окно
-#	_showMenu: Показать &меню
+	_menu_visible: Показать &меню
 	_topMost: &Поверх остальных окон
 	_full: На &весь экран
 	nWin: &Новое окно
