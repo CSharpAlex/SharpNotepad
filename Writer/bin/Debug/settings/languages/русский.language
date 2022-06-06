@@ -1,6 +1,3 @@
-# Lines starting with a # are comment lines and are ignored by MDE.
-#[language = "Русский" version = 1]
-
 #Menu
 File: &Файл
 	newFile: &Новый файл
