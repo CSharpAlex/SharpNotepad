@@ -8,6 +8,11 @@ using Writer.LanguageNS;
 namespace Writer.ControlsNS {
     public partial class SettingsDialog : Form {
         public bool LangIsChanged;
+        private NumericUpDown nupFontSize;
+        private Label lbFontPreview;
+        private ComboBox cmbFontStyle;
+        private ComboBox cmbFontName;
+
         public SettingsDialog() {
             void button_Click(object sender, EventArgs e) {
                 var but = (Button)sender;
@@ -26,6 +31,7 @@ namespace Writer.ControlsNS {
             int PlusY() =>
                 yItem += (int)Font.Size + 20;
             void GenerateItem(string name, Control[] controls) {
+                yItem = 0;
                 //pnMenu
                 var button = new Button {
                     FlatStyle = FlatStyle.Flat,
@@ -56,7 +62,7 @@ namespace Writer.ControlsNS {
             Button GenButton(string name, Point point, Size size) {
                 var btn = new Button {
                     FlatStyle = FlatStyle.Flat,
-                    FlatAppearance = { MouseOverBackColor = Settings.Theme.mBgOver, MouseDownBackColor = Settings.Theme.mBgDown, CheckedBackColor = Settings.Theme.mBgDown, BorderSize = 0 },
+                    FlatAppearance = { BorderSize = 0 },
                     Location = point,
                     Size = size,
                     BackColor = Settings.Theme.mBackColor,
@@ -66,6 +72,15 @@ namespace Writer.ControlsNS {
                     Name = name
                 };
                 btn.Click += SettingsDialog_Click;
+
+
+                //для Mono
+                btn.MouseEnter += (s, e) => (s as Control).BackColor = Settings.Theme.mBgOver;
+                btn.MouseLeave += (s, e) => (s as Control).BackColor = Settings.Theme.mBackColor;
+                btn.MouseDown += (s, e) => (s as Control).BackColor = Settings.Theme.mBgDown;
+                btn.MouseUp += (s, e) => (s as Control).BackColor = Settings.Theme.mBackColor;
+
+
                 if (name == "OK") { /*AcceptButton = btn;*/ btn.DialogResult = DialogResult.OK; }
                 else if (name == "Cancel") CancelButton = btn;
                 return btn;
@@ -89,40 +104,44 @@ namespace Writer.ControlsNS {
             }
             Label LbGen(string name, string caption = null) =>
                 new Label {
-                    Text = caption == null ? Language.Get(name) : caption,
+                    Text = caption ?? Language.Get(name),
                     Name = name,
                     //Width = 75,
                     AutoSize = true,
                     Height = 24,
                     TextAlign = ContentAlignment.MiddleLeft,
-                    Location = new Point(20, PlusY()),
+                    Location = new Point(20, PlusY() + 3),
                     Font = new Font(Font.FontFamily, pnItems.Font.Size + 1)
                 };
-            /*CheckBox GetCheckBox(string caption, string name, bool ischecked) {
+            CheckBox GetCheckBox(string caption, string name, bool ischecked) {
                 var chb = new CheckBox {
                     Text = caption,
                     Name = name,
                     Location = new Point(121, PlusY()),
                 };
                 return chb;
-            }*/
-            /*GroupBox groupBox(string caption, Control[] controls) {
+            }
+
+            GroupBox groupBox(string caption, Control[] controls) {
+                yItem = 0;
                 var gb = new GroupBox {
-                    Text = caption,
+                    Text = Language.Get(caption),
                     Name = caption,
-                    Location = new Point(20, yItem),
-                    AutoSize = true,
+                    Location = new Point(20, 20),
                     Width = pnItems.Width - 40,
                     ForeColor = ForeColor
                 };
                 gb.Controls.AddRange(controls);
+
+                gb.Height = gb.Controls[gb.Controls.Count - 1].Top + gb.Controls[gb.Controls.Count - 1].Height + 20;
+
                 return gb;
-            }*/
+            }
             #endregion
 
             #region Ini
             // SettingsDialog
-            ClientSize = new Size(650, 350);
+            ClientSize = new Size(700, 400);
             Font = new Font("Microsoft Sans Serif", 11.25F);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             StartPosition = FormStartPosition.CenterParent;
@@ -135,7 +154,7 @@ namespace Writer.ControlsNS {
                 Height = 50,
                 BackColor = Settings.Theme.mForeColor
             };
-            pnSetButtons.Controls.AddRange(new Control[] { GenButton("OK", new Point(Width - 235, 10), new Size(95, 30)), GenButton("Cancel", new Point(Width - 125, 10), new Size(95, 30)) });
+            pnSetButtons.Controls.AddRange(new Control[] { GenButton("OK", new Point(Width - 235, 10), new Size(105, 30)), GenButton("Cancel", new Point(Width - 125, 10), new Size(105, 30)) });
 
             pnMenu = new Panel {
                 Width = 181,
@@ -162,33 +181,34 @@ namespace Writer.ControlsNS {
 
             #region Ini Items
             GenerateItem("NewFile", new Control[]{
-                    LbGen("folder"), txtIniDir = TxtGen(Settings.IniDir,"IniDir", 304), GenButton("sFolder", new Point(407, yItem), new Size(38, 24)),
-                    LbGen("name"), txtNameOfFile = TxtGen(Settings.NameOfFile,"NameOfFile", 350),
+                    groupBox("values_for_a_new_file", new Control[] {
+                        LbGen("folder"), txtIniDir = TxtGen(Settings.IniDir,"IniDir", 304), GenButton("sFolder", new Point(407, yItem), new Size(38, 24)),
+                        LbGen("name"), txtNameOfFile = TxtGen(Settings.NameOfFile,"NameOfFile", 350)
+                    })
 					//new Label {Text = "Type",AutoSize = true,Location = new Point(20, PlusY()) }, txtTypeOfFile = TxtGen(Settings.TypeOfFile, 350),
 			});
+
+            GroupBox g1, g2;
+            Button btnFont;
             GenerateItem("View", new Control[]{
-                    LbGen("theme"),
-                    cmbTheme = GetComboBox(new Point(125, yItem), new Size(121, 26)),
-                    GenButton("cTheme", new Point(252, yItem), new Size(90, 26)),
-                    GenButton("nTheme", new Point(252, PlusY()), new Size(90, 26)),
-                    GenButton("rTheme", new Point(252, PlusY()), new Size(90, 26)),
+                    g1 = groupBox("theme", new Control[] {
+                        LbGen("theme"),
+                        cmbTheme = GetComboBox(new Point(100, yItem), new Size(121, 30)),
+                        GenButton("cTheme", new Point(230, yItem), new Size(170, 30)),
+                        GenButton("nTheme", new Point(230, PlusY()), new Size(170, 30)),
+                        GenButton("rTheme", new Point(230, PlusY()), new Size(170, 30)),
+                    }),
 
-                    /*groupBox("Font", new Control[] {
-                        new Label { Text = "Name", Location = new Point(20, 30), AutoSize=true }, cmbFontName = GetComboBox(new Point(105, yItem), new Size(121, 26)),
-                        LbGen("Size"),
-                        nupFontSize = new NumericUpDown() {
-                            Name = "fSize", Minimum = 1, Maximum = 72, DecimalPlaces = 2, Value = (decimal)Settings.mdFont.Size, Location = new Point(105, yItem), Size = new Size(121, 26),
-                        },
-                        LbGen("Style"),  cmbFontStyle = GetComboBox(new Point(105, yItem), new Size(121, 26), new object[] { "Regular","Bold","Italic", "Underline"}),
-                        lbFontPreview = LbGen("Plain text"),
-
-                        //GetCheckBox("Bold", "bold", Settings.mdFont.Bold),
-                        //GetCheckBox("Italic", "italic", Settings.mdFont.Italic),
-                        //GetCheckBox("Underline", "underline", Settings.mdFont.Underline),
-                    }),*/
-                                        
+                    g2 = groupBox("changeFont", new Control[] {
+                        LbGen("changeFont"),
+                        btnFont = GenButton("changeFont", new Point(230, yItem), new Size(170, 30))
+                    })
                     //LbGen(Settings.mdFont.Name + ", " + Settings.mdFont.SizeInPoints + "p", "fontName"), GenButton("Select font...","sFont", new Point(252, yItem), new Size(90, 26)),
-            }); ;
+            });
+
+            g1.Top = 20;
+            g2.Top = g1.Top + g1.Height + 20;
+
             GenerateItem("Language", new Control[]{
                 LbGen("Language"),
                 cmbLang = GetComboBox(/*"cmbLang", */new Point(125, yItem), new Size(121, 26)),
@@ -219,9 +239,25 @@ namespace Writer.ControlsNS {
             nupFontSize.ValueChanged += Font_Changed;*/
 
             //cmbTheme.SelectedIndexChanged +=
-                //delegate (object sender, EventArgs e) { pnItems.Controls["View"].Controls["cTheme"].Visible = cmbTheme.SelectedIndex == 3; };
+            //delegate (object sender, EventArgs e) { pnItems.Controls["View"].Controls["cTheme"].Visible = cmbTheme.SelectedIndex == 3; };
 
             //pnItems.Controls["View"].Controls["fontName"].Text = Settings.mdFont.FontFamily.Name + ", " + Settings.mdFont.SizeInPoints + "p, " + Settings.mdFont.Style.ToString();
+
+
+            //TODO: загрузка языков с сервера
+            pnItems.Controls["Language"].Controls["downloadLang"].Hide();
+            
+            btnFont.Click += (sender, e) => {
+                FontDialog dialog = new FontDialog {
+                    Font = Settings.txtFont,
+                    FontMustExist = true,
+                    ShowEffects = false
+                };
+
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    Settings.txtFont = dialog.Font;
+                }
+            };
         }
     }
 }

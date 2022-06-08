@@ -1,4 +1,5 @@
-# English
+# Lines starting with a # are comment lines and are ignored by MDE.
+#[language = "English" version = 1]
 
 #Menu
 File: &File
@@ -48,6 +49,7 @@ OK: &OK
 Cancel: &Cancel
 
 NewFile: &New File
+    values_for_a_new_file: new file
     folder: Folder
     name: Name
 View: &View
@@ -55,6 +57,7 @@ View: &View
     cTheme: Customize
     rTheme: Remove
 	nTheme: New
+	changeFont: Change Font
 Language: &Language
 # lang: Language
     downloadLang: Download

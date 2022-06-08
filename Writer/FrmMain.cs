@@ -5,6 +5,7 @@ using System.IO;
 using Writer.ControlsNS;
 using Writer.SettingsNS;
 using Writer.LanguageNS;
+using System.Collections.Generic;
 
 namespace Writer {
     partial class FrmMain : Form {
@@ -15,7 +16,7 @@ namespace Writer {
         SettingsDialog settingsDialog;
 
         string path = "";
-        bool changed = false;
+        bool changed;
         bool menu_visible = true;
 
         public FrmMain(string path = null) {
@@ -94,7 +95,7 @@ namespace Writer {
                     }
                 }
             }
-            catch (Exception ex) {
+            catch {
                 StartPosition = FormStartPosition.CenterScreen;
                 ClientSize = new Size(700, 400);
             }
@@ -108,11 +109,12 @@ namespace Writer {
                 Icon = new Icon(Settings.APP_PATH + "/res/icon.ico");
             }
             catch { /*без иконки*/ }
+            
 
             GC.Collect();
         }
-        void NewWindow(string path = null) {
-            System.Diagnostics.Process.Start(Application.ExecutablePath, path + "");
+        void NewWindow(string file = "") {
+            System.Diagnostics.Process.Start(Application.ExecutablePath, file);
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e) {
@@ -141,13 +143,22 @@ namespace Writer {
             }
         }
 
+        //Dictionary<Keys, string> hotkeys = new Dictionary<Keys, string>() {
+        //    //{ Keys.Control & Keys.C , "copy" },
+        //    //{ Keys.Control & Keys.X , "cut" },
+        //    //{ Keys.Control & Keys.V , "paste" },
+        //    //{ Keys.Control & Keys.Z , "undo" },
+        //    //{ Keys.Control & Keys.Y , "redo" },
+        //    { Keys.F2, "settings" }
+        //};
+
         public void MenuClick(string name, bool ischecked = false) {
             tb.Focus();
             switch (name) {
-                case "_menu_visible":
-                    //TODO: добавить эл. в меню
-                    Menu = ischecked ? ControlGenerator.MainMenuGen(MenuClick, tb.WordWrap, menu_visible) : null;
-                    break;
+                //case "_menu_visible":
+                    ////TODO: добавить эл. в меню
+                    //Menu = ischecked ? ControlGenerator.MainMenuGen(MenuClick, tb.WordWrap, menu_visible) : null;
+                    //break;
                 //editing
                 case "undo": tb.Undo(); break;
                 case "redo": tb.Redo(); break;
@@ -172,7 +183,7 @@ namespace Writer {
 
                     foreach (Control item in pnSearch.Controls) {
                         if (item is Button) {
-                            var b = (item as Button);
+                            var b = item as Button;
                             b.FlatAppearance.MouseOverBackColor = t.mBgOver;
                             b.FlatAppearance.MouseDownBackColor = t.mBgDown;
                         }
@@ -228,7 +239,7 @@ namespace Writer {
                 case "fm": tb.Font = new Font(tb.Font.FontFamily, tb.Font.Size - 1); break;
                 case "fr": tb.Font = Settings.txtFont; break;
 
-                // TODO: сохранить значение в настройках (+при ининцифлизации установить, Settings.Get(string property))
+                // TODO: сохранить значение в настройках (+при ининциализации установить)
                 case "_wordWrap": tb.WordWrap = ischecked; break;
                 //help
                 // TODO: Открыть справку (web page)
@@ -241,7 +252,6 @@ namespace Writer {
 
                         //change theme
                         if (!Settings.Theme.Equals(theme)) {
-                            tb.Font = Settings.txtFont;
                             tb.BackColor = Settings.Theme.txtBackColor;
                             tb.ForeColor = Settings.Theme.txtForeColor;
                             BackColor = Settings.Theme.txtBackColor;
@@ -250,6 +260,9 @@ namespace Writer {
                             flatToolMenu = new FlatToolMenuControl(MenuClick);
                             Controls.Add(flatToolMenu);
                         }
+                        
+                        tb.Font = Settings.txtFont;
+                        
                         //TODO: fmItems constructor
 
                         //dialogs

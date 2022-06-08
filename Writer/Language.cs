@@ -17,6 +17,7 @@ namespace Writer.LanguageNS {
         public static void Load(string langName) {
             //default values
             words = new Word[] {
+                new Word("values_for_a_new_file"),
                 new Word("_menu_visible"),
                 new Word("File"),
                 new Word("newFile"),
@@ -63,6 +64,7 @@ namespace Writer.LanguageNS {
                 new Word("cTheme"),
                 new Word("rTheme"),
                 new Word("nTheme"),
+                new Word("changeFont"),
                 new Word("Language"),
                 new Word("downloadLang"),
                 new Word("changeTheme"),
@@ -126,7 +128,7 @@ namespace Writer.LanguageNS {
         public static string Get(string key) {
             for (byte i = 0; i < words.Length; i++)
                 if (words[i].key == key) return words[i].val;
-            return "";
+            return key;
         }
     }
 }

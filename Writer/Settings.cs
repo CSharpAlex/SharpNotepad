@@ -69,7 +69,10 @@ namespace Writer.SettingsNS {
                             MessageBox.Show(Language.Get("msgThemeIsNotFound"), Language.Get("error"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
 
-                        txtFont = new Font(r.ReadString(), r.ReadSingle(), (FontStyle)r.ReadByte());
+                        try {
+                            txtFont = new Font(r.ReadString(), r.ReadSingle(), (FontStyle)r.ReadByte());
+                        }
+                        catch { txtFont = new Font(FontFamily.GenericMonospace, 11, FontStyle.Regular); }
 
                         IniDir = r.ReadString();
                         NameOfFile = r.ReadString();

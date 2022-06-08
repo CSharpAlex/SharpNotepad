@@ -96,9 +96,9 @@ namespace Writer.ControlsNS {
                 GenerateItem("paste", Shortcut.CtrlV),
                 new MenuItem("-"),
                 GenerateItem("selectAll", Shortcut.CtrlA),
-                new MenuItem("-"),
-                GenerateItem("find", Shortcut.CtrlF),
-                GenerateItem("replace", Shortcut.CtrlH),
+                //new MenuItem("-"),
+                //GenerateItem("find", Shortcut.CtrlF),
+                //GenerateItem("replace", Shortcut.CtrlH),
             });
             //Window
             menu.MenuItems.Add(Language.Get("Window"), new MenuItem[] {

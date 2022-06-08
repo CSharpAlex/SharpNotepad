@@ -1,4 +1,5 @@
-# Русский
+# Lines starting with a # are comment lines and are ignored by MDE.
+#[language = "Русский" version = 1]
 
 #Menu
 File: &Файл
@@ -48,6 +49,7 @@ OK: Применить
 Cancel: Отмена
 
 NewFile: Файл
+    values_for_a_new_file: Имя и путь для сохранении новых файлов
     folder: Путь
     name: Имя
 View: Внешний вид
@@ -55,6 +57,7 @@ View: Внешний вид
     cTheme: Настроить
     rTheme: Удалить
     nTheme: Создать
+    changeFont: Изменить шрифт
 Language: Язык
 # lang: Language
     downloadLang: Скачать

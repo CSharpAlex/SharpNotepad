@@ -46,10 +46,10 @@ namespace Writer.ControlsNS {
             string name = ((Button)sender).Name;
             switch (name) {
                 case "OK":
-                    bool checkData(bool cond, string msg) {
-                        if (!cond) MessageBox.Show(msg, Language.Get("error"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return cond;
-                    }
+                    //bool checkData(bool cond, string msg) {
+                    //    if (!cond) MessageBox.Show(msg, Language.Get("error"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //    return cond;
+                    //}
 
                     if (Directory.Exists(txtIniDir.Text))
                         Settings.IniDir = txtIniDir.Text;
