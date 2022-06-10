@@ -75,14 +75,20 @@ namespace Writer.ControlsNS {
                 case "nTheme":
                     ThemeDialog themeDialog = new ThemeDialog(name[0] == 'c' ? cmbTheme.SelectedItem.ToString() : null);
                     if (themeDialog.ShowDialog() == DialogResult.OK) {
-                        
+                        cmbTheme.Items.Add(themeDialog.themeData.Name);
+                        cmbTheme.SelectedIndex = cmbTheme.Items.Count - 1;
                     }
                     themeDialog.Dispose();
                     break;
                 case "rTheme":
                     if (MessageBox.Show(Language.Get("msgRemoveTheme"), "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-                        File.Delete($"./themes/{cmbTheme.SelectedItem}.theme");
-                        cmbTheme.Items.RemoveAt(cmbTheme.SelectedIndex);
+                        try {
+                            File.Delete($"./themes/{cmbTheme.SelectedItem}.theme");
+                            cmbTheme.Items.RemoveAt(cmbTheme.SelectedIndex);
+                        }
+                        catch (Exception ex) {
+                            MessageBox.Show(Language.Get("error") + ex.Message, Language.Get("error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     break;
                 case "sFolder":

@@ -107,7 +107,6 @@
     <None Include="Resources\cut.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\sn_icon.ico" />
     <Content Include="sn_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

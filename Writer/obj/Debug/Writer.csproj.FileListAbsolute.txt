@@ -25,3 +25,12 @@ D:/C#/Writer/writer-main/Writer/obj/Debug/Writer.pdb
 /home/user/Projects/Writer (копия) резерв/writer-main/Writer/bin/Debug/Writer.pdb
 /home/user/Projects/Writer (копия) резерв/writer-main/Writer/obj/Debug/Writer.Properties.Resources.resources
 /home/user/Projects/Writer (копия) резерв/writer-main/Writer/obj/Debug/Writer.csproj.CoreCompileInputs.cache
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\bin\Debug\Writer.exe.config
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\bin\Debug\Writer.exe
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\bin\Debug\Writer.pdb
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\obj\Debug\Writer.csproj.AssemblyReference.cache
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\obj\Debug\Writer.Properties.Resources.resources
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\obj\Debug\Writer.csproj.GenerateResource.cache
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\obj\Debug\Writer.csproj.CoreCompileInputs.cache
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\obj\Debug\Writer.exe
+D:\C#\SharpNotepad\SharpNotepad-main\Writer\obj\Debug\Writer.pdb

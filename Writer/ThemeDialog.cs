@@ -13,6 +13,7 @@ namespace Writer.ControlsNS {
     internal class ThemeDialog : Form {
         readonly TextBox txtName;
         readonly ColorDialog colorDialog;
+        public Theme themeData { get; private set; }
         public ThemeDialog(string themeName = null) {
             #region IniFunctions
             short x = 5, y = 72;
@@ -66,7 +67,7 @@ namespace Writer.ControlsNS {
             }
             #endregion
 
-            Theme theme;
+            Theme theme = new Theme();
             #region __init__
             BackColor = Settings.Theme.txtBackColor;
             ForeColor = Settings.Theme.txtForeColor;
@@ -159,6 +160,8 @@ namespace Writer.ControlsNS {
             colorDialog = new ColorDialog {
                 FullOpen = true
             };
+
+            themeData = theme;
             #endregion
 
             btnOK.Click += delegate (object sender, EventArgs e) {
@@ -177,6 +180,7 @@ namespace Writer.ControlsNS {
                 }
                 else if (themeName != null && theme1.Name != themeName) File.Delete(Settings.THEME_DIR + $"/{themeName}.theme");
                 Theme.SaveTheme(theme1);
+                themeData = theme1;
             };
         }
 
