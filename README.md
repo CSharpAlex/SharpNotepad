@@ -8,6 +8,6 @@ Sharp Notepad - это улучшенный текстовый редактор.
 
 Работает в Windows и Linux.
 
-![image](https://user-images.githubusercontent.com/85738488/167711167-3103d650-27bf-4a9c-a8f4-391e45c06a8e.png)
+![image](https://user-images.githubusercontent.com/85738488/173058974-592923be-e516-4b44-b8ac-5df3dad7558d.png)
 
 ![image](https://user-images.githubusercontent.com/85738488/172172234-75878e3e-23d7-4abf-9aee-d00c52384c5b.png)
